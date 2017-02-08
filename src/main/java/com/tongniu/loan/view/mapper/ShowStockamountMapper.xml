@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongniu.loan.view.dao.ShowStockamountDao">
+
+	<resultMap type="com.tongniu.loan.view.domain.ShowStockamount"
+		id="showStockamountList">
+		<id column="cust_name" property="cust_name" />
+		<id column="fund_acct" property="fund_acct" />
+		<id column="stock_code" property="stock_code" />
+		<result column="stock_name" property="stock_name" />
+		<result column="seid_id" property="seid_id" />
+		<result column="seid_name" property="seid_name" />
+		<result column="balance" property="balance" />
+	</resultMap>
+
+
+	<!-- 查询资金账户信息 -->
+	<select id="getAllShowStockamountList" resultMap="showStockamountList">
+		select * from
+		`showstockamount`  limit #{0},#{1}
+	</select>
+	
+	<select id="getAllShowStockamountListCount" resultType="java.lang.Integer" >
+		select count(0) from `showstockamount`
+	</select>
+	
+	<!-- 查询资金账户信息 -->
+	<select id="searchShowStockamount" resultMap="showStockamountList">
+		select * from
+		`showstockamount` where `cust_name` like concat('%',#{0},'%') 		
+		 limit #{1},#{2}
+	</select>
+	
+	<select id="searchShowStockamountCount" resultType="java.lang.Integer" >
+		select count(0) from
+		`showstockamount` where `cust_name` like concat('%',#{0},'%') 	
+	</select>
+
+</mapper>

@@ -1,0 +1,176 @@
+html
+ {
+	width: 100%;
+	height: 100%;
+	background-color: #F6F6F9;
+	background-size: 100% 100%;
+	-webkit-background-size: 100% 100%;
+}
+* {
+	box-sizing: border-box;
+}
+.header{
+	background-color:#161617;
+	height: 6rem;
+	width: 100%;
+}
+.back{
+	height: 4rem;
+	width: 5rem;
+}
+.back a{
+	display: block;
+	height: 6rem;
+	width:6rem;
+	position: absolute;
+	z-index: 1;
+}
+.back img{
+	height: 4rem;
+	width: 5rem;
+	margin-top: 1rem;
+}
+.fund{
+	color: #AB8E3D;
+	font-size: 1.8rem;
+	position: relative;
+	text-align: center;
+	top: -2.2rem;
+}
+img{
+	width:100%;
+	height:11rem;
+}
+.ysy{
+	color:#A8A8A9;
+	position:absolute;
+	font-size:1.6rem;
+	margin-top:-8rem;
+	margin-left:2.4rem;
+}
+.wsy{
+	color:#A8A8A9;
+	font-size:1.6rem;
+	margin-top:-8rem;
+	position:relative;
+	float:right;
+	right:4rem;
+}
+.money{
+	color:#AD8E3E;
+	font-size:2rem;	
+	position:relative;
+	margin-top:-5rem;
+	margin-left:2.4rem;
+}
+.money_1{
+	color:#BABABB;
+	font-size:2rem;	
+	position:relative;
+	margin-top:-2.7rem;
+	float:right;
+	right:4rem;
+}
+.gp{
+	color:#AD8E3E;
+	font-size:2rem;
+	position:relative;
+	top:2rem;
+	left:.8rem;
+}
+.one{
+	height:6rem;
+	width:100%;
+	border-bottom:1px solid #DFDFDF;
+	margin-top:2rem;	
+}
+.two{
+	background-color:#F2F1F1;
+	height:5rem;
+	width:100%;
+	border-bottom:1px solid #DFDFDF;
+}
+.two_a,.two_b,.two_c,.two_d{
+	color:#AD8E3E;
+	font-size:1.4rem;
+	line-height:5rem;
+}
+.two_a{
+	position:absolute;
+	margin-top:-5rem;
+	margin-left:5%;
+}
+.two_b{
+	position:absolute;
+	margin-top:-5rem;
+	margin-left:29%;
+}
+.two_c{
+	position:absolute;
+	margin-top:-5rem;	
+	margin-left:53%;
+}
+.two_d{
+	position:absolute;
+	margin-top:-5rem;
+	margin-left:78%;
+}
+.bs{
+	height:15rem;
+	width:100%;
+	background-color:#ffffff;
+	position:absolute;
+	border-bottom:1px solid #DFDFDF;
+}
+.dyh{
+	width:90%;
+	height:5rem;
+	background-color:#ffffff;
+	border-bottom:1px solid #DFDFDF;
+	position:relative;
+	margin-left:5%;
+}
+.dyh_a{
+	height:5rem;
+	line-height:5rem;
+	width:25%;
+	font-size:1.4rem;
+	position:absolute;
+	text-align: center;
+	left:-5%;
+}
+.dyh_b{
+	height:5rem;
+	line-height:5rem;
+	width: 25%;
+	font-size:1.4rem;
+	position:absolute;
+	left: 23%;
+	text-align: center;
+}
+.dyh_c{
+	height:5rem;
+	line-height:5rem;
+	width:25%;
+	font-size:1.4rem;
+	position:absolute;
+	left: 50%;
+	text-align: center;
+}
+.dyh_d{
+	height:5rem;
+	line-height:5rem;
+	width: 25%;
+	font-size:1.4rem;
+	position:absolute;
+	left: 77%;
+	text-align: center;
+}
+.dyh a{
+	color: #000000;
+}
+	
+
+
+
+

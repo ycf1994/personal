@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongniu.loan.business.dao.UserCarryDao">
+
+	<insert id="addUserCarry">
+		insert into
+		`usercarry`(`user_id`,`money`,`bank_id`,`bank_card`)
+		values(#{user_id},#{money},#{bank_id},#{bank_card})
+	</insert>
+
+	<select id="findUserCarryByUser_id" resultType="com.tongniu.loan.business.domain.UserCarry">
+		select * from usercarry where user_id=#{0} order by id desc
+	</select>
+
+	<select id="findUserCarry_Rows" resultType="com.tongniu.loan.business.domain.UserCarry">
+		select * from
+		usercarry
+		where `user_id` in (
+		select `id` from user where `username` like concat('%',#{0},'%') or
+		`realname` like concat('%',#{0},'%')
+		) 
+		<if test="param2!=-1">
+			and `status`=#{1}
+		</if>
+		order by create_time desc
+		limit #{2},#{3}
+	</select>
+	
+	<select id="findUserCarry_Total" resultType="int">
+		select count(0) from
+		usercarry
+		where `user_id` in (
+		select `id` from user where `username` like concat('%',#{0},'%') or
+		`realname` like concat('%',#{0},'%')
+		<if test="param2!=-1">
+			and `status`=#{1}
+		</if>
+		)
+	</select>
+	
+	<update id="check" >
+		update usercarry set status=#{0},update_time=current_timestamp where id=#{1}
+	</update>
+
+
+</mapper>

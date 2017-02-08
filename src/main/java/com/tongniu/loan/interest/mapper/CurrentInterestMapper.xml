@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongniu.loan.interest.dao.CurrentInterestDao">
+
+	<resultMap type="com.tongniu.loan.interest.domain.CurrentInterest" id="currentInterestList">
+		<id column="id" property="id" />
+		<result column="user_id" property="user_id" />
+		<result column="investment_account_no" property="investment_account_no" />
+		<result column="current_interest" property="current_interest" />
+		<result column="input_time" property="input_time" />
+		<result column="interest_date" property="interest_date" />
+	</resultMap>
+
+
+	<!-- 根据用户ID查询每天的每笔资金的活期收益 -->
+	<select id="findCurrentInterestsByUser_id" resultMap="currentInterestList"
+		parameterType="java.lang.Integer">
+		select * from `current_interest` where
+		`user_id`=#{user_id}
+	</select>
+
+	<!-- 根据资金编号查询 某一笔资金的收益 -->
+	<select id="findCurrentInterestsByInvestment_account_no" resultMap="currentInterestList"
+		parameterType="java.lang.String">
+		select * from `current_interest`
+		where `investment_account_no`=#{investment_account_no}
+	</select>
+
+</mapper>

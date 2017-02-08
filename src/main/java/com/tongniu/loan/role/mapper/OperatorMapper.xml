@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongniu.loan.role.dao.OperatorDao">
+
+	<insert id="add">
+		insert into 
+		`operator`(`opcode`,`username`,`password`,`realname`)
+		values(#{opcode},#{username},#{password},#{realname})
+	</insert>
+	
+	<delete id="delete">
+		delete from `operator` where id=#{0}
+	</delete>
+	
+	<update id="update">
+		update `operator` set `opcode`=#{opcode},
+		`username`=#{username},`password`=#{password},
+		`realname`=#{realname}
+		where `id`=#{id}
+	</update>
+	
+	<update id="update_login_time">
+	update `operator` set `login_time`=current_timestamp where id=#{0}
+	</update>
+	
+	<select id="find_rows" resultType="com.tongniu.loan.role.domain.Operator">
+		select * from `operator`
+		where `username` like concat('%',#{0},'%')
+		or `realname` like concat('%',#{0},'%')
+		limit #{1},#{2}
+	</select>
+	
+	<select id="find_count" resultType="int">
+	select count(0) from `operator`
+		where `username` like concat('%',#{0},'%')
+		or `realname` like concat('%',#{0},'%')
+	</select>
+	
+	<select id="login" resultType="com.tongniu.loan.role.domain.Operator">
+		select * from `operator` where `username`=#{0} and `password`=#{1}
+	</select>
+	
+	<select id="checkSame" resultType="int">
+		select count(0) from `operator` where `username`=#{0}
+	</select>
+
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongniu.loan.role.dao.CustDao">
+
+	<resultMap type="com.tongniu.loan.role.domain.Cust" id="custList">
+		<id column="id" property="id" />
+		<result column="realname" property="realname" />
+		<result column="idno" property="idno" />
+		<result column="mobile" property="mobile" />
+	</resultMap>
+	
+	
+	<!-- 根据用户ID查询资金账户信息 -->
+	<select id="getCustById" resultType="com.tongniu.loan.role.domain.Cust">
+		select * from `cust` where `id`=#{id}
+	</select>
+	
+	<!-- 查询全部借款用户信息 -->
+	<select id="getCustList" resultMap="custList">
+		select * from `cust` limit #{0},#{1}
+	</select>
+	
+	<select id="getCustListCount" resultType="java.lang.Integer">
+		select count(0) from `cust`
+	</select>
+	
+	<!-- 查询全部借款用户信息 -->
+	<select id="searchCust" resultMap="custList">
+		select * from `cust` where realname like  concat('%',#{2},'%')  limit #{0},#{1}
+	</select>
+	
+	<select id="searchCustCount" resultType="java.lang.Integer">
+		select count(0) from `cust` where realname like  concat('%',#{0},'%') 
+	</select>
+	
+	<select id="getIdByRealnameAndIdno" resultType="java.lang.Integer">
+		select id from `cust` where realname=#{0} and idno=#{1}
+	</select>
+	
+	<insert id="addCust">
+		insert into `cust`(`realname`,`idno`,`mobile`) values(#{realname},#{idno},#{mobile})
+	</insert>
+	
+	<select id="getAllCustList" resultMap="custList">
+		select * from `cust`
+	</select>
+
+</mapper>

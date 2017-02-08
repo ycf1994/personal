@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongniu.loan.view.dao.ShowFlowDao">
+
+	<resultMap type="com.tongniu.loan.view.domain.ShowFlow" id="showFlowList">
+		<id column="id" property="id" />
+		<id column="deal_no" property="deal_no" />
+		<id column="user_id" property="user_id" />
+		<result column="bank_card" property="bank_card" />
+		<result column="bank_name" property="bank_name" />
+		<result column="money" property="money" />
+		<result column="input_time" property="input_time" />
+		<result column="transferred_time" property="transferred_time" />
+		<result column="flag" property="flag" />
+		<result column="username" property="username" />
+		<result column="realname" property="realname" />
+	</resultMap>
+
+
+	<select id="getAllShowFlowList" resultMap="showFlowList">
+		select
+		* from `showflow` order by input_time desc limit #{0},#{1} 
+	</select>
+
+	<select id="getAllShowFlowListCount" resultType="java.lang.Integer">
+		select count(0)
+		from `showflow`
+	</select>
+
+	<select id="searchShowFlow" resultMap="showFlowList">
+		select * from `showflow` where (`username` like
+		concat('%',#{0},'%')
+		or `realname` like concat('%',#{0},'%') )
+		<if test="param2!=0">
+			and `flag`=#{1}
+		</if>
+		order by input_time desc
+		limit #{2},#{3}
+	</select>
+
+	<select id="searchShowFlowCount" resultType="java.lang.Integer">
+		select count(0) from `showflow` where (`username` like
+		concat('%',#{0},'%')
+		or `realname` like concat('%',#{0},'%') )
+		<if test="param2!=0">
+			and `flag`=#{1}
+		</if>
+
+	</select>
+
+</mapper>

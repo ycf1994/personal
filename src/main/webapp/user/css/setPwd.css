@@ -1,0 +1,152 @@
+html
+ {
+	width: 100%;
+	height: 100%;
+	background-color: #F6F6F9;
+	background-size: 100% 100%;
+	-webkit-background-size: 100% 100%;
+}
+* {
+	box-sizing: border-box;
+}
+.header{
+	background-color:#161617;
+	height: 6rem;
+	width: 100%;
+}
+.back{
+	height: 4rem;
+	width: 5rem;
+}
+.back a{
+	display: block;
+	height: 6rem;
+	width:6rem;
+	position: absolute;
+	z-index: 1;
+}
+.back img{
+	height: 4rem;
+	width: 5rem;
+	margin-top: 1rem;
+}
+.fund{
+	color: #AB8E3D;
+	font-size: 1.8rem;
+	position: relative;
+	text-align: center;
+	top: -2.2rem;
+}
+.content{
+	width: 100%;
+	height:22rem;
+	position: relative;
+	background-color: #FFFFFF;
+	margin-top: 1rem;
+	border-bottom: 1px solid #EFEFEF;
+	border-top: 1px solid #EFEFEF;
+}
+.content .mobile{
+	height: 5.5rem;
+	border-bottom: 1px solid #DDDDDD;
+	width: 90%;
+	margin-left: 5%;
+}
+.content .mobile_{
+	height: 5.5rem;
+}
+.content .num{
+	height: 5.5rem;
+	border-bottom: 1px solid #DDDDDD;
+	width: 90%;
+	margin-left: 5%;
+}
+.content .num_{
+	height: 5.5rem;
+}
+.content .pwd{
+	height: 5.5rem;
+	border-bottom: 1px solid #DDDDDD;
+	width: 90%;
+	margin-left: 5%;
+}
+.content .pwd_{
+	height: 5.5rem;
+}
+.content .pwd_2{
+	height: 5.5rem;
+	width: 90%;
+	margin-left: 5%;
+}
+.content .pwd_2_{
+	height: 5.5rem;
+}
+.next{
+    width: 90%;
+    margin-top:2rem;
+    margin-left: 5%;
+}
+.next img{
+	height: 4rem;
+    width: 100%;
+}
+.mobile img {
+    width: 3rem;
+    height: 3rem;
+    /* margin-top: 1.1rem; */
+    margin: 4% auto;
+}
+.content .myForm .input {
+	appearance: none;
+	-webkit-appearance: none;
+	background: transparent;
+	border: 0;
+	outline: none;
+	font-size: 1.5rem;
+	margin-left: 1rem;
+	position: absolute;
+	width: 23rem;	
+}
+::-moz-placeholder {
+	color:#878787;
+	font-family: helvetica;
+	font-size: 1.5rem;
+}
+::-webkit-input-placeholder {
+	color:#878787;
+	font-family: helvetica;
+	font-size: 1.5rem;
+}
+:-ms-input-placeholder {
+	color:#878787;
+	font-family: helvetica;
+	font-size: 1.5rem;
+}
+.num img{
+	width: 3rem;
+	height: 3rem;
+	margin-top: 1.1rem;
+}
+.pwd img{
+	width: 3rem;
+	height: 3rem;
+	margin-top: 1.1rem;
+}
+.pwd_2 img{
+	width: 3rem;
+	height: 3rem;
+	margin-top: 1.1rem;
+}
+.valinum input{
+	height: 2.5rem;
+	width: 10rem;
+	background-color: #FFDE87;
+	border-radius: 1.5rem;
+	color: #422F07;
+	border: 0;
+	font-size: 1.4rem;
+	float: right;
+	margin-top: 1.5rem;
+	position: relative;
+	z-index: 1;
+}

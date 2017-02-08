@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongniu.loan.business.dao.StockamountDao">
+
+	<resultMap type="com.tongniu.loan.business.domain.Stockamount" id="stockamountList">
+		<id column="id" property="id" />
+		<result column="cust_id" property="cust_id" />
+		<result column="stock_code" property="stock_code" />
+		<result column="stock_name" property="stock_name" />
+		<result column="contract_id" property="contract_id" />
+		<result column="balance" property="balance" />
+	</resultMap>
+	
+	
+	<!-- 根据客户ID查询股票持有总数 -->
+	<select id="getStockamountListByCust_id"  resultMap="stockamountList">
+		select * from `stockamount` where `cust_id`=#{cust_id}
+	</select>
+	
+	<!-- 根据客户ID查询股票持有总数 -->
+	<select id="getStockamountListByFund_id"  resultMap="stockamountList">
+		select * from `stockamount` where `fund_id`=#{fund_id} and  balance>0
+	</select>
+	
+	<select id="searchStockamout" resultMap="stockamountList">
+	select * from `stockamount` where `fund_id`=#{0} limit #{1},#{2}
+	</select>
+	
+	<select id="searchStockamoutCount" resultType="java.lang.Integer">
+	select count(0) from `stockamount` where `fund_id`=#{0}
+	</select>
+	
+
+</mapper>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongniu.loan.business.dao.FlowDao">
+
+	<resultMap type="com.tongniu.loan.business.domain.Flow" id="flowList">
+		<id column="id" property="id" />
+		<result column="deal_no" property="deal_no" />
+		<result column="user_id" property="user_id" />
+		<result column="bank_card" property="bank_card" />
+		<result column="bank_name" property="bank_name" />
+		<result column="money" property="money" />
+		<result column="input_time" property="input_time" />
+		<result column="transferred_time" property="transferred_time" />
+		<result column="flag" property="flag" />
+	</resultMap>
+
+	<!-- 插入资金流水记录 -->
+	<insert id="addFlow" parameterType="com.tongniu.loan.business.domain.Flow">
+		insert into
+		`flow`(`deal_no`,`user_id`,`bank_card`,`bank_name`,`money`,`flag`)
+		values(#{deal_no},#{user_id},#{bank_card},#{bank_name},#{money},#{flag})
+	</insert>
+
+	<!-- 根据用户ID查询资金流水记录 -->
+	<select id="findFlowsByUser_id" resultMap="flowList">
+		select * from `flow` where `user_id`=#{user_id}
+	</select>
+	
+	<!-- 根据用户ID查询资金提现记录 -->
+	<select id="findCashFlowsByUser_id" resultMap="flowList" >
+		select * from `flow` where `user_id`=#{user_id} and `flag`=-1
+	</select>
+	
+	<!-- 根据用户ID查询资金入账记录 -->
+	<select id="findRecordFlowsByUser_id" resultMap="flowList" >
+		select * from `flow` where `user_id`=#{user_id} and `flag`=1
+	</select>
+	
+	<select id="getFlowListByUser_id" resultMap="flowList">
+		select * from `flow` where `user_id`=#{0} order by input_time desc
+		limit #{1},#{2} 
+	</select>
+	
+	<select id="getFlowListByUser_idCount" resultType="java.lang.Integer">
+		select count(0) from `flow` ord  where `user_id`=#{0} order by input_time  desc
+	</select>
+
+	
+	<insert id="addContractFlow">
+		INSERT INTO `flow` (
+		`deal_no`,
+		`user_id`,
+		`money`,
+		`flag`
+	)
+VALUES
+	(
+		unix_timestamp() * 1000 + floor(rand() * 1000),
+		#{0},
+		#{1},
+		111002
+	);
+	</insert>
+	
+	<select id="getFlowTypes" resultType="String" >
+		select concat(type_value,'-',type_content) from parameter where type_id=1110
+	</select>
+</mapper>

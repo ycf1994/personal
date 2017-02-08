@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongniu.loan.business.dao.ParameterDao">
+
+	<resultMap type="com.tongniu.loan.business.domain.Parameter" id="parameterList">
+		<result column="serial_no" property="serial_no" />
+		<result column="type_id" property="type_id" />
+		<result column="type_name" property="type_name" />
+		<result column="type_value" property="type_value" />
+		<result column="type_content" property="type_content" />
+	</resultMap>
+
+	<select id="getAllNeedPara" resultMap="parameterList">
+		select * from parameter where type_id=#{0}
+	</select>
+	
+
+</mapper>

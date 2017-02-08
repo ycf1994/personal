@@ -1,0 +1,175 @@
+html
+ {
+	width: 100%;
+	height: 100%;
+	background-color: #F6F6F9;
+	background-size: 100% 100%;
+	-webkit-background-size: 100% 100%;
+}
+* {
+	box-sizing: border-box;
+}
+.header{
+	background-color:#161617;
+	height: 6rem;
+	width: 100%;
+}
+.back{
+	height: 4rem;
+	width: 5rem;
+}
+.back a{
+	display: block;
+	height: 6rem;
+	width:6rem;
+	position: absolute;
+	z-index: 1;
+}
+.back img{
+	height: 4rem;
+	width: 5rem;
+	margin-top: 1rem;
+}
+.fund{
+	color: #AB8E3D;
+	font-size: 1.8rem;
+	position: relative;
+	text-align: center;
+	top: -2.2rem;
+}
+.container{
+	width: 100%;
+	height:18rem;
+	position: relative;
+}
+.container img{
+	width: 100%;
+	height:18rem;
+}
+.container .one{
+	color: #FEFEFE;
+	font-size: 1.4rem;
+	position: absolute;
+	top: 2rem;
+	left:1rem;
+}
+.container .two{
+	color: #AC8F3E;
+	font-size: 2.8rem;
+	position: absolute;
+	top:5rem;
+	left:1rem;
+}
+.container .three{
+	color:#959595;
+	font-size: 1.4rem;
+	position: absolute;
+	top: 12rem;
+	left:2rem;
+}
+.container .four{
+	color:#AC8F3E;
+	font-size: 1.4rem;
+	position: absolute;
+	top: 14.6rem;
+	left:10rem;
+}
+.container .five{
+	color:#959595;
+	font-size: 1.4rem;
+	position: absolute;
+	top: 12rem;
+	right:7.6rem;
+}
+.container .six{
+	color:#AC8F3E;
+	font-size: 1.4rem;
+	position: absolute;
+	top: 14.6rem;
+	right:1.6rem;
+}
+.content{
+	width: 100%;
+	height:28.1rem;
+	position: relative;
+	background-color: #FFFFFF;
+	border-bottom: 1px solid #D4D4D4;
+	border-top: 1px solid #EFEFEF;
+	margin-top: 1rem;
+}
+.content .qiehuan{
+	height: 5.5rem;
+	width: 100%;
+}
+.content .ing{
+	color: #AC8F3E;
+	font-size: 1.6rem;
+	line-height: 5.5rem;
+	width: 50%;
+	text-align: center;
+	position: absolute;
+	top: 0rem;
+	border-top: 1px solid #AC8F3E;
+}
+.content .end{
+	color: #373737;
+	font-size: 1.6rem;
+	line-height: 5.5rem;
+	width: 50%;
+	text-align: center;
+	float: right;
+	position: absolute;
+	top: 0rem;
+	left: 50%;	
+}
+.record{
+	height: 20rem;
+	width: 90%;
+	margin-left: 5%;
+	position: relative;
+}
+.record .shuju{
+	height: 4.5rem;
+	width: 100%;
+	border-bottom: 1px solid #D4D4D4;
+	position: relative;
+	color: #898989;
+}
+.record .shijian{
+	width: 25%;
+	height: 4.5rem;
+	line-height: 4.5rem;
+	font-size: 1.2rem;
+	text-align: center;
+	position: absolute;
+}
+.record .jixi{
+	width: 25%;
+	margin-left: 28%;
+	height: 4.5rem;
+	line-height: 4.5rem;
+	font-size: 1.2rem;
+	text-align: center;
+	position: absolute;
+}
+.record .wanfen{
+	width: 30%;
+	margin-left: 50%;
+	height: 4.5rem;
+	line-height: 4.5rem;
+	font-size: 1.2rem;
+	text-align: center;
+	position: absolute;
+}
+.record .shouyi{
+	width: 20%;
+	margin-left:80%;
+	height: 4.5rem;
+	line-height: 4.5rem;
+	font-size: 1.2rem;
+	text-align: center;
+	position: absolute;
+}
+.none{
+	display: none;
+}

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongniu.loan.business.dao.TstockinfoDao">
+
+	<resultMap type="com.tongniu.loan.business.domain.Tstockinfo" id="tstockinfoList">
+		<id column="stock_id" property="stock_id" />
+		<result column="stock_code" property="stock_code" />
+		<result column="stock_name" property="stock_name" />
+		<result column="stock_type" property="stock_type" />
+		<result column="stock_type_name" property="stock_type_name" />
+		<result column="seid_id" property="seid_id" />
+		<result column="seid_name" property="seid_name" />
+	</resultMap>
+	
+	
+
+	<select id="getTstockinfoByStock_code"  resultType="com.tongniu.loan.business.domain.Tstockinfo">
+		select * from `tstockinfo` where `stock_code`=#{stock_code}
+	</select>
+	
+	<select id="getAllTstockinfoList"  resultMap="tstockinfoList">
+		select * from `tstockinfo` limit #{0},#{1}
+	</select>
+	
+	<select id="getAllTstockinfo"  resultMap="tstockinfoList">
+		select * from `tstockinfo`
+	</select>
+	
+	<select id="getAllTstockinfoListCount" resultType="java.lang.Integer">
+		select count(0) from `tstockinfo`
+	</select>
+	
+	<select id="getStockList"  resultMap="tstockinfoList">
+		select * from `tstockinfo`
+		 where `stock_code`  like concat('%',#{0},'%') 
+		 or `stock_name` like concat('%',#{0},'%') 		
+	</select>
+	
+	<select id="searchTstockinfo"  resultMap="tstockinfoList">
+		select * from `tstockinfo`
+		 where `stock_code`  like concat('%',#{0},'%') 
+		 or `stock_name` like concat('%',#{0},'%') 		
+		 limit #{1},#{2}
+	</select>
+	
+	<select id="searchTstockinfoCount" resultType="java.lang.Integer">
+		select count(0) from `tstockinfo`
+		 where `stock_code`  like concat('%',#{0},'%') 
+		 or `stock_name` like concat('%',#{0},'%') 		
+	</select>
+	
+	<insert id="addTstockinfo">
+		insert into tstockinfo(`stock_code`,`stock_name`,`stock_type`,`stock_type_name`,`seid_id`,`seid_name`)
+		values(#{stock_code},#{stock_name},#{stock_type},#{stock_type_name},#{seid_id},#{seid_name})
+	</insert>
+	
+	<select id="findStocks" resultMap="tstockinfoList" >
+		select * from tstockinfo where stock_code like concat('%',#{0},'%') or stock_name like concat('%',#{0},'%') limit 0,20
+	</select>
+
+</mapper>

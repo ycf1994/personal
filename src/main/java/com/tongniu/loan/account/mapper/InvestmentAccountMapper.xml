@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongniu.loan.account.dao.InvestmentAccountDao">
+
+	<resultMap type="com.tongniu.loan.account.domain.InvestmentAccount" id="investmentAccountList">
+		<id column="id" property="id" />
+		<result column="investment_account_no" property="investment_account_no" />
+		<result column="user_id" property="user_id" />
+		<result column="money" property="money" />
+		<result column="balance" property="balance" />
+		<result column="interest_rate" property="interest_rate" />
+		<result column="input_time" property="input_time" />
+		<result column="bank_card" property="bank_card" />
+		<result column="bank_name" property="bank_name" />
+		<result column="start_date" property="start_date" />
+	</resultMap>
+
+	<!-- 插入投资记录 -->
+	<insert id="addInvestmentAccount" parameterType="com.tongniu.loan.account.domain.InvestmentAccount">
+		insert into
+		`investment_account`(`investment_account_no`,`user_id`,`money`,`balance`,`interest_rate`,`bank_card`,`bank_name`,`start_date`,`end_date`)
+		values(#{investment_account_no},#{user_id},#{money},#{money},#{interest_rate},#{bank_card},#{bank_name},#{start_date},#{end_date})
+	</insert>
+	
+	<!-- 根据客户ID查询投资记录 -->
+	<select id="getInvestmentAccountsByUser_id" resultMap="investmentAccountList">
+		select *
+		from `investment_account` where `user_id`=#{user_id} and `balance`>0
+	</select>
+
+
+	<update id="backMoney">
+		update `investment_account` set balance=balance+#{1} where `investment_account_no`=#{0}
+	</update>
+	
+	<select id="checkInvestment_account_no" resultType="int">
+		select count(0) from `investment_account` where investment_account_no=#{0}
+	</select>
+</mapper>

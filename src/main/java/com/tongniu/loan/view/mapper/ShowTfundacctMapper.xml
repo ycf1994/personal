@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongniu.loan.view.dao.ShowTfundacctDao">
+
+	<resultMap type="com.tongniu.loan.view.domain.ShowTfundacct"
+		id="showTfundacctList">
+		<result column="fund_id" property="fund_id" />
+		<result column="fund_acct" property="fund_acct" />
+		<result column="realname" property="realname" />
+		<result column="idno" property="idno" />
+		<result column="fund_balance" property="fund_balance" />
+	</resultMap>
+
+	<select id="getAllShowTfundacctList" resultMap="showTfundacctList">
+		select * from(select
+		 `fund_id`,
+		 `fund_acct`,
+		 `realname`,
+		 `idno`,
+		sum(`fund_balance`) AS `fund_balance` from `showtfundacct` group by fund_id 
+		) t where
+		fund_balance>0
+	</select>
+	
+	<select id="getAllShowTfundacctList2" resultMap="showTfundacctList">
+		select * from(select
+		 `fund_id`,
+		 `fund_acct`,
+		 `realname`,
+		 `idno`,
+		sum(`fund_balance`) AS `fund_balance` from `showtfundacct` group by fund_id 
+		) t 
+	</select>
+
+</mapper>

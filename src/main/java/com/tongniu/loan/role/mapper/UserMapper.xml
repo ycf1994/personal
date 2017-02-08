@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongniu.loan.role.dao.UserDao">
+
+	<resultMap type="com.tongniu.loan.role.domain.User" id="userList">
+		<id column="id" property="id" />
+		<result column="username" property="username" />
+		<result column="password" property="password" />
+		<result column="mobile" property="mobile" />
+		<result column="address" property="address" />
+		<result column="idno" property="idno" />
+		<result column="email" property="email" />
+		<result column="realname" property="realname" />
+		<result column="login_time" property="login_time" />
+		<result column="input_time" property="input_time" />
+	</resultMap>
+
+	<!-- 用户注册 -->
+	<insert id="addUser" parameterType="com.tongniu.loan.role.domain.User">
+		insert into
+		`user`(`username`,`password`,`mobile`,`address`,`idno`,`email`,`realname`)
+		values(#{username},#{password},#{mobile},#{address},#{idno},#{email},#{realname})
+	</insert>
+
+	<!-- 删除用户 -->
+	<delete id="delUser" parameterType="java.lang.Integer">
+		delete from `user` where
+		`id`=#{id}
+	</delete>
+
+	<!-- 更新用户 -->
+	<update id="updateUser" parameterType="com.tongniu.loan.role.domain.User">
+		update `user`
+		set
+		`username`=#{username},`password`=#{password},`mobile`=#{mobile},`address`=#{address},`email`=#{email}
+		where `id`=#{id}
+	</update>
+
+	<!-- 查询全部用户信息 -->
+	<select id="findUser" resultMap="userList">
+		select * from `user`
+	</select>
+
+	<!-- 用户登录验证 返回User对象 -->
+	<select id="login" resultType="com.tongniu.loan.role.domain.User">
+		select * from `user` where
+		`username`=#{0} and
+		`password`=#{1}
+	</select>
+
+	<!-- 更新最近登录时间 -->
+	<update id="updateLogin_time">
+		update `user` set
+		`login_time`=#{0} where
+		`id`=#{1}
+	</update>
+
+	<!-- 修改密码 -->
+	<update id="modifyPassword">
+		update `user` set `password`=#{0} where id=#{1}
+	</update>
+
+	<!-- 分页查询用户 -->
+	<select id="findUserByPageAndRow" resultMap="userList">
+		select *
+		from `user`
+		limit #{0},#{1}
+	</select>
+
+	<select id="getUserCount" resultType="java.lang.Integer">
+		select count(0) from `user`
+	</select>
+
+	<select id="searchUser" resultMap="userList">
+		select * from `user` where
+		`realname` LIKE
+		concat('%',#{0},'%') or `idno` LIKE
+		concat('%',#{0},'%') limit #{1},#{2}
+	</select>
+
+	<select id="searchUserCount" resultType="java.lang.Integer">
+		select count(0) from
+		`user` where `realname` LIKE
+		concat('%',#{0},'%')
+		or `idno` LIKE
+		concat('%',#{0},'%')
+	</select>
+
+	<select id="getIdByUsername" resultType="java.lang.Integer">
+		select id from `user`
+		where `username` =#{0}
+	</select>
+
+	<select id="getUserById" resultType="com.tongniu.loan.role.domain.User">
+		select * from `user` where
+		id=#{0}
+	</select>
+
+	<select id="doLogin" resultType="com.tongniu.loan.role.domain.User">
+		select * from `user` where
+		`mobile`=#{0} and `password`=#{1}
+	</select>
+
+	<select id="getYestodayGain" resultType="java.lang.Double">
+		select 
+(select ifnull(sum(current_interest),0) from current_interest where user_id=#{0}
+and interest_date= date_sub(curdate(), INTERVAL 1 DAY)
+)+
+(select ifnull(sum(investment_interest),0) from investment_interest where user_id=#{0}
+and interest_date= date_sub(curdate(), INTERVAL 1 DAY))
+
+
+	</select>
+
+	<select id="getYestodayYueGain" resultType="java.lang.Double">
+		select ifnull(sum(current_interest),0) from current_interest where user_id=#{0}
+and interest_date= date_sub(curdate(), INTERVAL 1 DAY)
+	</select>
+
+	<select id="getInvestmoney" resultType="java.lang.Double">
+		select
+		ifnull(sum(contract_money),0) from contract where user_id=#{0} and
+		states in
+		(1,2,5) and iscontinue=1
+	</select>
+
+	<select id="getLeiji" resultType="java.lang.Double">
+		select gain from account where
+		user_id=#{0}
+	</select>
+
+	<select id="getYueLeiji" resultType="java.lang.Double">
+		(select
+		ifnull(sum(current_interest),0) from current_interest where
+		user_id=#{0})
+	</select>
+
+	<select id="getEveryDayGain" resultType="java.lang.String">
+		select
+		concat(时间,'--',计息份额,'--',万份收益,'--',收益) from( SELECT
+		interest_date 时间,
+		sum(fene) 计息份额,
+		TRUNCATE(ifnull(sum(current_interest)/sum(fene)*10000,0),4) 万份收益,
+		sum(current_interest) 收益
+		FROM
+		current_interest
+		WHERE
+		user_id = #{0}
+		GROUP
+		BY
+		interest_date
+		)s
+		order by 时间 desc
+	</select>
+
+	<select id="getTixianBankinfo" resultType="java.lang.String">
+		SELECT
+		concat(bank_card, '-', bank_name)
+		FROM
+		investment_account
+		WHERE
+		user_id =
+		#{0}
+		LIMIT 0,
+		1
+	</select>
+
+	<update id="setPwd">
+		update `user` set password=#{0} where mobile=#{1}
+	</update>
+
+	<select id="getMobileCount" resultType="int">
+		select count(0) from
+		`user` where `mobile`=#{0}
+	</select>
+
+	<select id="getQiRiNianhua" resultType="String">
+		select concat(a,'-',b) from(
+		select round(ifnull(nianhua,0)*100,3) a,DATE_FORMAT(date,'%m.%d') b from(
+		select * from nianhua where user_id=#{0})a
+		RIGHT JOIN(
+		select date_sub(curdate(), INTERVAL 1 DAY) date
+		union
+		select date_sub(curdate(), INTERVAL 2 DAY) date
+		union
+		select date_sub(curdate(), INTERVAL 3 DAY) date
+		union
+		select date_sub(curdate(), INTERVAL 4 DAY) date
+		union
+		select date_sub(curdate(), INTERVAL 5 DAY) date
+		union
+		select date_sub(curdate(), INTERVAL 6 DAY) date
+		union
+		select date_sub(curdate(), INTERVAL 7 DAY) date
+		)b on a.nianhua_date=b.date order by b.date)c
+	</select>
+	
+	<update id="setPattern_lock">
+		update user set pattern_lock=#{0} where id=#{1}
+	</update>
+	
+	<select id="getPattern_lock" resultType="String">
+		select pattern_lock from user where id=#{0}
+	</select>
+</mapper>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongniu.loan.account.dao.TfundacctDao">
+
+	<resultMap type="com.tongniu.loan.account.domain.Tfundacct"
+		id="tfundacctList">
+		<id column="fund_id" property="fund_id" />
+		<result column="fund_acct" property="fund_acct" />
+		<result column="cust_id" property="cust_id" />
+		<result column="cust_name" property="cust_name" />
+		<result column="contract_no" property="contract_no" />
+		<result column="fund_balance" property="fund_balance" />
+		<result column="contract_money" property="contract_money" />
+	</resultMap>
+
+
+	<!-- 根据资金账户id查询资金账户信息 -->
+	<select id="getTfundacctList" resultMap="tfundacctList">
+		select * from(select
+		`fund_id`,
+		`fund_acct`,
+		`cust_id`,
+		`cust_name`,
+		sum(`contract_money`) contract_money
+		from
+		tfundacct
+
+		group by fund_id
+		order by fund_id desc)t limit #{0},#{1}
+	</select>
+
+	<!-- 根据资金账户id查询资金账户信息 -->
+	<select id="getTfundacctListCount" resultType="java.lang.Integer">
+		select count(0)
+		from(select
+		`fund_id`,
+		`fund_acct`,
+		`cust_id`,
+		`cust_name`,
+		sum(`contract_money`) contract_money
+		from
+		tfundacct
+
+		group by fund_id)t
+	</select>
+
+	<!-- 根据资金账户id查询资金账户信息 -->
+	<select id="getTfundacctListByCust_name" resultMap="tfundacctList">
+		select *
+		from(select
+		`fund_id`,
+		`fund_acct`,
+		`cust_id`,
+		`cust_name`,
+		sum(`contract_money`) contract_money,
+		sum(`fund_balance`) fund_balance
+		from
+		tfundacct
+
+		group by fund_id
+		order by fund_id desc)t
+		where `cust_name` like concat('%',#{2},'%') and contract_money>0
+		limit #{0},#{1}
+	</select>
+
+	<!-- 根据资金账户id查询资金账户信息 -->
+	<select id="getTfundacctListByCust_nameCount" resultType="java.lang.Integer">
+		select count(0) from(select *
+		from(select
+		`fund_id`,
+		`fund_acct`,
+		`cust_id`,
+		`cust_name`,
+		sum(`contract_money`) contract_money,
+		sum(`fund_balance`) fund_balance
+		from
+		tfundacct
+
+		group by fund_id
+		order by fund_id desc)t
+		where `cust_name` like concat('%',#{2},'%') and contract_money>0
+		)t2
+	</select>
+
+	<!-- 根据资金账户id查询资金账户信息 -->
+	<select id="getAllTfundacctListByCust_name" resultMap="tfundacctList">
+		select *
+		from `tfundacct`
+		where `cust_name` =#{0}
+	</select>
+
+	<update id="backMoney">
+		update `tfundacct` set
+		fund_balance=fund_balance-#{1},contract_money=0 where `fund_id`=#{0}
+	</update>
+
+	<select id="checkStockIsEmpty" resultType="java.lang.Integer">
+		select
+		ifnull(sum(balance),0) from stockamount where fund_id=#{0}
+	</select>
+
+	<select id="getStock" resultType="java.lang.String">
+		SELECT
+		concat(
+		s.stock_code,
+		'-',
+		s.stock_name,
+		'-',
+		round(
+		s.balance * (
+		(
+		SELECT
+		contract_money
+		FROM
+		tfundacct
+		WHERE
+		fund_id = #{0}
+		AND contract_no = #{1}
+		) / (
+		SELECT
+		sum(contract_money)
+		FROM
+		tfundacct
+		WHERE
+		fund_id = #{0}
+		)
+		),
+		0
+		),
+		'-',
+		(
+		CASE
+		WHEN h.now_price IS NULL THEN
+		0
+		ELSE
+		h.now_price
+		END
+		)
+		)
+		FROM
+		(
+		SELECT
+		*
+		FROM
+		stockamount
+		WHERE
+		fund_id = #{0}
+		) s
+		LEFT JOIN (
+		SELECT
+		h1.stock_code,
+		now_price
+		FROM
+		hqinfo h1,
+		(
+		SELECT
+		stock_code,
+		max(input_time) input_time
+		FROM
+		hqinfo
+		GROUP BY
+		stock_code
+		) h2
+		WHERE
+		h1.input_time = h2.input_time
+		AND h1.stock_code = h2.stock_code
+		) h ON s.stock_code = h.stock_code
+	</select>
+
+	<insert id="addTfundacct">
+		INSERT INTO `tfundacct` (
+		`cust_name`,
+		`fund_id`,
+		`fund_acct`,
+		`cust_id`,
+		`contract_no`,
+		`fund_balance`,
+		`contract_money`
+		)
+		VALUES
+		((select realname from cust where id=#{2}),
+		#{0},
+		#{1},
+		#{2},
+		#{3},
+		#{5},
+		#{4}
+		);
+	</insert>
+
+	<select id="checkSame" resultType="String">
+		select fund_id from
+		(SELECT
+		*
+		FROM
+		tfundacct
+		group by fund_acct,cust_id)t1
+		where cust_id=#{0} and
+		fund_acct=#{1}
+	</select>
+	
+	<update id="tfundacctBack">
+		call 资金回款资金账户扣款操作(#{0},#{1},#{2})
+	</update>
+	
+	<update id="cancelBack">
+		call 资金回款撤销操作(#{0},#{1},#{2})
+	</update>
+
+</mapper>

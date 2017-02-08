@@ -1,0 +1,115 @@
+html
+ {
+	width: 100%;
+	height: 100%;
+	background: url(../img/settingmoh.png) center center;
+	background-size: 100% 100%;
+	-webkit-background-size: 100% 100%;
+	position: fixed;
+	overflow-y: auto;
+}
+* {
+	box-sizing: border-box;
+}
+body{
+	height: 100%;
+}
+.card1{
+	width: 90%;
+	height:36.5rem;
+	margin-left: 5%;
+	margin-top:7rem;
+	position: relative;
+}
+.card1 .card{
+	width: 100%;
+	height:27rem;
+	margin-,left: 5%;
+	margin-top: 7rem;
+	position: absolute;
+}
+.card1 .one{
+	height:6rem;
+	width: 100%;
+	margin-left: 5%;
+}
+.card1 .one img{
+	height: 4rem;
+	width: 4rem;
+	position: relative;
+	top: 8.2rem;
+	left: 0rem;
+}
+.card1 .one span{
+	position: relative;
+	top: 7rem;
+	left: 1rem;
+	color: #FFFFFF;
+	font-size: 1.4rem;
+}
+.card1 .one span a{
+	color: #FFFFFF;
+}
+.card1 .two{
+	height: 6rem;
+	width: 100%;
+	position: relative;
+	top: 8.6rem;
+}
+.card1 .two .zhong{
+	height: 2.5rem;
+    width: 2.5rem;
+    position: absolute;
+    left: 1.5rem;
+    top: 1.4rem;
+}
+.card1 .two span{
+	color: #FFFFFF;
+	font-size: 1.6rem;
+	position: absolute;
+	left: 6rem;
+	top: 1.6rem;
+}
+.card1 .two .guan {
+	height: 2.5rem;
+    width: 4.6rem;
+    position: absolute;
+    right: 1.5rem;
+    top: 1.4rem;
+    float: right;
+}
+.card1 .two .kai {
+	height: 2.5rem;
+    width: 4.6rem;
+    position: absolute;
+    right: 1.5rem;
+    top: 1.4rem;
+    float: right;
+}
+.card1 .three{
+	border-bottom: 1px solid #383838;
+}
+.card1 .four span{
+	top: 2.4rem;
+}
+.card1 .four .zhong{
+	top: 1.4rem;
+}
+.card1 .four .close{
+	    top: 2.2rem;
+}
+.card1 .guanbi{
+    position: absolute;
+    top: 36rem;
+    height: 3.2rem;
+    width: 3.2rem;
+    left: 45%;
+}
+.none{
+	display: none;
+}
+.footer{
+	height:8rem;
+	width: 100%;
+	background-color: #9F9FA2;
+}

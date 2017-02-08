@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongniu.loan.interest.dao.InvestmentInterestDao">
+
+	<resultMap type="com.tongniu.loan.interest.domain.InvestmentInterest" id="investmentInterestList">
+		<id column="id" property="id" />
+		<result column="user_id" property="user_id" />
+		<result column="contract_no" property="contract_no" />
+		<result column="investment_account_no" property="investment_account_no" />
+		<result column="investment_interest" property="investment_interest" />
+		<result column="input_time" property="input_time" />
+		<result column="interest_date" property="interest_date" />
+		<result column="rate" property="rate" />
+	</resultMap>
+
+
+	<!-- 根据用户ID查询每天的每笔资金的投资收益 -->
+	<select id="findInvestmentInterestsByUser_id" resultMap="investmentInterestList"
+		parameterType="java.lang.Integer">
+		select * from `investment_interest` where
+		`user_id`=#{user_id}
+	</select>
+
+	<!-- 根据资金编号查询 某一笔资金的投资收益 -->
+	<select id="findInvestmentInterestByInvestment_account_no" resultMap="investmentInterestList"
+		parameterType="java.lang.String">
+		select * from `investment_interest`
+		where `investment_account_no`=#{investment_account_no}
+	</select>
+	
+	<!-- 根据合同编号查询 某一个合同的投资收益 -->
+	<select id="findInvestmentInterestsByContract_no" resultMap="investmentInterestList"
+		parameterType="java.lang.String">
+		select * from `investment_interest`
+		where `contract_no`=#{contract_no}
+	</select>
+	
+	
+
+</mapper>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" type="text/css" href="css/base.css" />
+	<link rel="stylesheet" type="text/css" href="css/setPwd.css" />
+	<link rel="stylesheet" type="text/css" href="css/alertPop.css" />
+    <title></title>   
+</head>
+<body>
+	<div class="header">
+		<div class="back"><a href="login.html"><img src="img/1_spec_r2_c2.png" ></a></div>
+		<div class="fund">设置密码</div>
+	</div>
+	<div class="content">
+		<form class="myForm" action="#">
+		<p class="mobile">
+			<img src="img/2_spec_r2_c2.png">
+			<input type="text" class="mobile_ input" placeholder="请输入手机号码" />
+		</p>
+		<p class="num">
+			<img src="img/2_spec_r4_c2.png">
+			<input type="text" class="num_ input" placeholder="请输入验证码" disabled="disabled"/>
+			<span class="valinum"><input type="button" id="btn" value="获取验证码"/></span>
+		</p>
+		<p class="pwd">
+			<img src="img/2_spec_r6_c2.png">
+			<input type="password" class="pwd_ input" placeholder="请输入密码，密码由数字字母组成" />
+		</p>
+		<p class="pwd_2">
+			<img src="img/2_spec_r8_c2.png">
+			<input type="password" class="pwd_2_ input" placeholder="请再次输入密码" />
+		</p>
+		</form>
+		<p class="next"><img src="img/next@2x.png"></p>
+	</div>
+</body>
+<script src="js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/setPwd.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/md5.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="js/alertPopShow.js" charset="utf-8"></script>
+</html>

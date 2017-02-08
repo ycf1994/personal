@@ -1,0 +1,237 @@
+html
+ {
+	width: 100%;
+	height: 100%;
+	background-color: #F6F6F9;
+	background-size: 100% 100%;
+	-webkit-background-size: 100% 100%;
+	overflow-x: hidden;
+}
+* {
+	box-sizing: border-box;
+}
+.records{
+    position: absolute;
+    font-size: 3rem;
+    color: #7C7C7C;
+    top: 17rem;
+    margin: 0 atuo;
+    text-align: center;
+    width: 100%;
+}
+.header{
+	background-color:#161617;
+	height: 6rem;
+	width: 100%;
+}
+.back{
+	height: 4rem;
+	width: 5rem;
+}
+.back a{
+	display: block;
+	height: 6rem;
+	width:6rem;
+	position: relative;
+	z-index: 1;
+}
+.back img{
+	height: 4rem;
+	width: 5rem;
+	margin-top: 1rem;
+	position: relative;
+}
+.fund{
+	color: #AB8E3D;
+	font-size: 1.8rem;
+	position: relative;
+	text-align: center;
+	top: -2.2rem;
+}
+.content{
+	width: 100%;
+	height:18rem;
+	position: relative;
+}
+.content img{
+	width: 100%;
+	height:18rem;
+}
+.content .total{
+	position: absolute;
+	top: 3rem;
+	width: 100%;
+	text-align: center;
+	color: #EAEAEA;
+	font-size: 1.8rem;
+}
+.content .num{
+	color: #AB8E3D;
+	font-size:3.6rem;
+	position: absolute;
+	top: 6rem;
+	width: 100%;
+	text-align: center;
+}
+.content .one{
+	color: #EAEAEA;
+	font-size:1.4rem;
+	position: relative;
+	top: -5rem;
+	left:8%;
+}
+.content .two{
+	color: #949494;
+    font-size: 1.4rem;
+    position: relative;
+    top: -5rem;
+    text-align: center;
+    width: 13rem;
+}
+.content .three{
+	color: #EAEAEA;
+	font-size:1.4rem;
+	position: relative;
+    top: -8.8rem;
+    text-align: center;
+}
+.content .four{
+	color: #949494;
+	font-size:1.4rem;
+	position: relative;
+    top:-8.8rem;
+    text-align: center;
+}
+.content .five{
+	color: #EAEAEA;
+	font-size:1.4rem;
+	position: relative;
+	float: right;
+    top:-12.6rem;
+   	right: 8%;
+}
+.content .six{
+	color: #949494;
+    font-size: 1.4rem;
+    position: absolute;
+    right: 0;
+    margin-top: -10.6rem;
+    width: 13.6rem;
+    text-align: center;
+}
+.content_2{
+	width: 100%;
+	height: 24.8rem;
+	background-color: #FFFFFF;
+	border-bottom:1px solid #CBCBCB;
+	border-top:1px solid #CBCBCB;
+	margin-top: 1rem;
+}
+.content_2 .one_2{
+	height: 4.5rem;
+	border-bottom: 1px solid #DFDFDF;
+	color: #AA8F3F;
+	font-size: 1.6rem;
+	line-height: 4.5rem;
+	padding-left: 1.8rem;
+}
+.content_2 .two_2,.content_2 .three_2,.content_2 .four_2{
+	height: 5rem;
+	border-bottom: 1px solid #DFDFDF;
+	width: 90%;
+	margin-left: 5%;
+}
+.content_2 .five_2{
+	height: 5rem;
+	width: 90%;
+	margin-left: 5%;
+}
+.content_2 .two_2 .cz{
+	    color: #383838;
+    font-size: 1.5rem;
+    position: relative;
+    top: .5rem;
+}
+.content_2 .two_2 .date{
+	color: #878787;
+    font-size: 1.2rem;
+    position: relative;
+    top: 2.4rem;
+    left: -3.3rem;
+}
+.content_2 .two_2 .money{
+	color: #AA8F3F;
+	margin-top: 1.5rem;
+    font-size: 1.6rem;
+    position: absolute;
+    right: 5%;
+}
+.content_2 .three_2 .cz{
+	color: #383838;
+	font-size: 1.5rem;
+	position: relative;
+	top: .5rem;
+}
+.content_2 .three_2 .date{
+	color: #878787;
+    font-size: 1.2rem;
+    position: relative;
+    top: 2.4rem;
+    left: -7.8rem;
+}
+.content_2 .three_2 .money{
+	color: #AA8F3F;
+    float: right;
+    font-size: 1.6rem;
+    display: block;
+    position: absolute;
+    margin-top: -.6rem;
+    right: 5%;
+}
+.content_2 .four_2 .cz{
+	color: #383838;
+	font-size: 1.5rem;
+	position: relative;
+	top: .5rem;
+}
+.content_2 .four_2 .date{
+	color: #878787;
+    font-size: 1.2rem;
+    position: relative;
+    top: 2.4rem;
+    left: -7.8rem;
+}
+.content_2 .four_2 .money{
+	color: #AA8F3F;
+    float: right;
+    font-size: 1.6rem;
+    display: block;
+    position: absolute;
+    margin-top: -.6rem;
+    right: 5%;
+}
+.content_2 .five_2 .cz{
+	color: #383838;
+    font-size: 1.5rem;
+    position: relative;
+    top: .5rem;
+}
+.content_2 .five_2 .date{
+	color: #878787;
+    font-size: 1.2rem;
+    position: relative;
+    top: 2.4rem;
+    left: -7.8rem;
+}
+.content_2 .five_2 .money{
+	color: #AA8F3F;
+    float: right;
+    font-size: 1.6rem;
+    display: block;
+    position: absolute;
+    margin-top: -.6rem;
+    right: 5%;
+}
+.none{
+	display:none;
+}

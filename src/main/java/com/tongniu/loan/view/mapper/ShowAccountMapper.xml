@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongniu.loan.view.dao.ShowAccountDao">
+
+	<resultMap type="com.tongniu.loan.view.domain.ShowAccount"
+		id="showAccountList">
+		<id column="account_id" property="account_id" />
+		<id column="username" property="username" />
+		<id column="realname" property="realname" />
+		<result column="user_id" property="user_id" />
+		<result column="amount_money" property="amount_money" />
+		<result column="gain" property="gain" />
+		<result column="interest_rate" property="interest_rate" />
+		<result column="sum_money" property="sum_money" />
+	</resultMap>
+
+
+	<!-- 查询资金账户信息 -->
+	<select id="getAllShowAccountByPageAndRow" resultMap="showAccountList">
+		select * from
+		`ShowAccount`  limit #{0},#{1}
+	</select>
+	
+	<select id="getAllShowAccountCount" resultType="java.lang.Integer" >
+		select count(0) from `ShowAccount`
+	</select>
+	
+	<!-- 查询资金账户信息 -->
+	<select id="searchAccount" resultMap="showAccountList">
+		select * from
+		`ShowAccount` where `username` like concat('%',#{2},'%') 
+		or `realname` like concat('%',#{2},'%')
+		 limit #{0},#{1}
+	</select>
+	
+	<select id="getSearchCount" resultType="java.lang.Integer" >
+		select count(0) from
+		`ShowAccount` where `username` like concat('%',#{2},'%') 
+		or `realname` like concat('%',#{2},'%')
+	</select>
+
+</mapper>

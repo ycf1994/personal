@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongniu.loan.view.dao.ShowInterestDao">
+
+	<resultMap type="com.tongniu.loan.view.domain.ShowInterest"
+		id="showInterestList">
+		<id column="user_id" property="user_id" />
+		<id column="username" property="username" />
+		<id column="realname" property="realname" />
+		<result column="sum_current_interest" property="sum_current_interest" />
+		<result column="sum_investment_interest" property="sum_investment_interest" />
+		<result column="interest_date" property="interest_date" />
+	</resultMap>
+
+	<select id="getAllShowInterestList" resultMap="showInterestList">
+		select * from `showinterest` limit #{0},#{1}
+	</select>
+	 
+	<select id="getAllShowInterestListCount" resultType="java.lang.Integer">
+		select count(0) from `showinterest`
+	</select>	
+	
+	<select id="searchShowInterest" resultMap="showInterestList">
+	select * from `showinterest` 
+	where `username` like concat('%',#{2},'%')  or   `realname` like concat('%',#{2},'%') 
+	limit #{0},#{1}
+	</select>
+	
+<select id="searchShowInterestCount" resultType="java.lang.Integer">
+	select count(0) from `showinterest` 
+	where `username` like concat('%',#{0},'%')  or   `realname` like concat('%',#{0},'%') 
+	
+	</select>
+
+</mapper>

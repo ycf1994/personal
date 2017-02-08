@@ -1,0 +1,162 @@
+html
+ {
+	width: 100%;
+	height: 100%;
+	background-color: #F6F6F9;
+	background-size: 100% 100%;
+	-webkit-background-size: 100% 100%;
+}
+* {
+	box-sizing: border-box;
+}
+.header{
+	background-color:#161617;
+	height: 6rem;
+	width: 100%;
+}
+.back{
+	height: 4rem;
+	width: 5rem;
+}
+.back a{
+	display: block;
+	height: 6rem;
+	width:6rem;
+	position: absolute;
+	z-index: 1;
+}
+.back img{
+	height: 4rem;
+	width: 5rem;
+	margin-top: 1rem;
+}
+.menu{
+	height: 4rem;
+	width:5rem;
+	float: right;
+	position: relative;
+	top: -6.2rem;
+}
+.menu a{
+	display: block;
+	height: 6rem;
+	width:5rem;
+	position: absolute;
+	z-index: 1;
+	line-height: 7rem;
+}
+.menu img{
+	height: 2rem;
+	width:2.8rem;
+}
+.fund{
+	color: #AB8E3D;
+	font-size: 1.8rem;
+	position: relative;
+	text-align: center;
+	top: -2.2rem;
+}
+.content{
+	width: 100%;
+	position: relative;
+}
+.content .kuang{
+	width: 90%;
+	margin-left: 5%;
+	height: 18rem;
+	margin-top: 1.5rem;
+	position: relative
+}
+.content .kuang img{
+	width:100%;
+	height: 18rem;
+	position: absolute;
+	top: 0;
+	z-index: -1;
+}
+.content .kuang p{
+	position: absolute;
+	width: 100%;
+	text-align: center;
+}
+.content .kuang .one{
+	color: #836F37;
+	font-size: 1.4rem;
+	margin-top: 4rem;
+}
+.content .kuang .weihao{
+	color: #7F7F7F;
+	font-size: 1.4rem;
+	margin-top: 4rem;
+	margin-left: 1rem;
+}
+.content .kuang .two{
+	color: #AC8F3E;
+	font-size: 3rem;	
+	margin-top: 7rem;
+}
+.content .kuang .three{
+	color: #7F7F7F;
+	font-size: 1.4rem;	
+	margin-top: 12rem;
+}
+
+.content .money{
+	height:6.5rem;
+	width: 100%;	
+	background-color: #FFFFFF;
+	margin-top: 1.5rem;
+	border-bottom: 1px solid #EFEFEF;
+	border-top: 1px solid #EFEFEF;
+	padding-left: 2rem;
+}
+.content .num{
+	color: #7C7C7C;
+	line-height: 6.5rem;
+	font-size: 1.5rem;
+}
+.content .money_{
+	height: 6.5rem;
+}
+.content .myForm .input {
+	appearance: none;
+	-webkit-appearance: none;
+	background: transparent;
+	border: 0;
+	outline: none;
+	font-size: 1.5rem;
+	margin-left: 2rem;
+	position: absolute;
+	width: 23rem;
+}
+::-moz-placeholder {
+	color:#878787;
+	font-family: helvetica;
+	font-size: 1.5rem;
+	position:relative;
+	top:-.2rem;
+}
+::-webkit-input-placeholder {
+	color:#878787;
+	font-family: helvetica;
+	font-size: 1.5rem;
+	position:relative;
+	top:-.2rem;
+}
+:-ms-input-placeholder {
+	color:#878787;
+	font-family: helvetica;
+	font-size: 1.5rem;
+	position:relative;
+	top:-.2rem;
+}
+.submit{
+    width: 90%;
+    margin-top:1.5rem;
+    margin-left: 5%;
+}
+.submit img{
+	height: 4rem;
+    width: 100%;
+}
+

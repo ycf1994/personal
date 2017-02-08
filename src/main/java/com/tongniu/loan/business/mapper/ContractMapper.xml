@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tongniu.loan.business.dao.ContractDao">
+
+	<resultMap type="com.tongniu.loan.business.domain.Contract"
+		id="contractList">
+		<id column="id" property="id" />
+		<result column="contract_no" property="contract_no" />
+		<result column="investment_account_no" property="investment_account_no" />
+		<result column="user_id" property="user_id" />
+		<result column="cust_id" property="cust_id" />
+		<result column="contract_money" property="contract_money" />
+		<result column="sign_date" property="sign_date" />
+		<result column="start_date" property="start_date" />
+		<result column="end_date" property="end_date" />
+		<result column="investment_rate" property="investment_rate" />
+		<result column="fund_id" property="fund_id" />
+		<result column="fund_acc" property="fund_acc" />
+		<result column="states" property="states" />
+		<result column="check_time" property="check_time" />
+		<result column="check_name" property="check_name" />
+		<result column="wanjie_time" property="wanjie_time" />
+		<result column="iscontinue" property="iscontinue" />
+		<result column="input_time" property="input_time" />
+		<result column="invest_gain" property="invest_gain" />
+		<result column="sum_gain" property="sum_gain" />
+		<result column="earnest_money" property="earnest_money" />
+		<result column="sum_money" property="sum_money" />
+	</resultMap>
+
+	<!-- 添加合同 -->
+	<insert id="addContract" parameterType="com.tongniu.loan.business.domain.Contract">
+		insert into
+		`contract`(`contract_no`,`investment_account_no`,`user_id`,`cust_id`,`contract_money`,`sign_date`,`start_date`,`end_date`,
+		`investment_rate`,`fund_id`,`fund_acc`,`invest_gain`,`earnest_money`,`sum_money`)
+		values(#{contract_no},#{investment_account_no},#{user_id},#{cust_id},#{contract_money},#{sign_date},#{start_date},#{end_date},
+		#{investment_rate},#{fund_id},#{fund_acc},truncate(#{invest_gain},2),#{earnest_money},#{sum_money}
+		)
+	</insert>
+	<!-- 根据出资者ID查询合同 -->
+	<select id="getContractsByUser_id" resultMap="contractList">
+		select * from
+		`contract` where `user_id`=#{user_id}
+	</select>
+	<!-- 根据借款者ID查询合同 -->
+	<select id="getContractsByCust_id" resultMap="contractList">
+		select * from
+		`contract` where `cust_id`=#{cust_id}
+	</select>
+	<!-- 根据资金编号查询合同 -->
+	<select id="getContractByInvestment_account_no" resultMap="contractList">
+		select * from `contract` where
+		`investment_account_no`=#{investment_account_no}
+	</select>
+
+	<select id="getNeedContracts" resultMap="contractList">
+		select * from `contract`
+		where `states`=#{states}
+	</select>
+
+	<select id="getContracts" resultMap="contractList">
+		select * from `contract`
+	</select>
+
+	<update id="updateStates" parameterType="com.tongniu.loan.business.domain.Contract">
+		update `contract` set
+		`states`=#{states},`check_name`=#{check_name},`check_time`=#{check_time}
+		<if test="states==4">
+			,`iscontinue`=2
+		</if>
+		where `contract_no`=#{contract_no}
+	</update>
+
+	<select id="searchContract" resultMap="contractList">
+		select * from `contract`
+		where `investment_account_no`=#{0}
+		limit #{1},#{2}
+	</select>
+
+	<select id="searchContractCount" resultType="java.lang.Integer">
+		select count(0) from
+		`contract` where `investment_account_no`=#{0}
+
+	</select>
+
+	<select id="getNeewContractListByUser_id" resultMap="contractList">
+		select * from `contract`
+		where user_id=#{0}
+
+		<if test="param2==1">
+			and `iscontinue`=1
+			and `states` in (1,2,5)
+		</if>
+		<if test="param2==2">
+			and `states` in(3,6)
+		</if>
+		<if test="param2==3">
+			and `states`!=0 and `states`!=4
+		</if>
+	</select>
+
+	<select id="getContractByContractId" resultType="com.tongniu.loan.business.domain.Contract">
+		select * from
+		`contract` where `id`=#{0}
+	</select>
+
+	<!-- 资金账户划回原投资账户 合同结清 -->
+	<update id="changeStateByBackMoney">
+		update `contract` set states =3 where
+		`contract_no`=#{0}
+	</update>
+
+	<select id="getInvestment_account_noByContract_no" resultType="java.lang.String">
+		select investment_account_no from `contract` where `contract_no`=#{0}
+	</select>
+
+	<!-- 根据合同编号 查询 资金账号 id 余额 以及投资金额 -->
+	<select id="getTfund" resultType="java.lang.String">
+		SELECT
+		concat(
+		t.fund_id,
+		'-',
+		round(
+		(contract.contract_money / t.contract_money
+		)*t.fund_balance,2),
+		'-',
+		round(contract.contract_money,2)
+		)
+		FROM
+		(SELECT
+		fund_id,
+		sum(fund_balance) fund_balance,
+		sum(contract_money) contract_money
+		FROM
+		tfundacct
+		GROUP BY
+		fund_id)t,
+		contract
+		WHERE
+		contract.id = #{0}
+		AND
+		t.fund_id = contract.fund_id
+	</select>
+	
+	<!-- 根据合同编号 查询 资金账号 id 余额 以及投资金额 -->
+	<select id="getTfundByContract_no" resultType="java.lang.String">
+		SELECT
+		concat(
+		t.fund_id,
+		'-',
+		round(
+		(contract.contract_money / t.contract_money
+		)*t.fund_balance,2),
+		'-',
+		round(contract.contract_money,2)
+		)
+		FROM
+		(SELECT
+		fund_id,
+		sum(fund_balance) fund_balance,
+		sum(contract_money) contract_money
+		FROM
+		tfundacct
+		GROUP BY
+		fund_id)t,
+		contract
+		WHERE
+		contract.contract_no = #{0}
+		AND
+		t.fund_id = contract.fund_id
+	</select>
+
+	<update id="updateFund_no">
+		update contract set fund_no=(select fund_no from
+		tfundacct where contract_no=#{0}) where contract_no=#{0};
+	</update>
+
+	<select id="getContractByContract_no" resultType="com.tongniu.loan.business.domain.Contract">
+		select * from
+		contract where contract_no=#{0}
+	</select>
+
+	<update id="zuofeihuikuan">
+		update investment_account set balance=balance+(select
+		contract_money from
+		contract where contract_no=#{0})
+		where
+		investment_account_no=(select investment_account_no from contract
+		where contract_no=#{0})
+	</update>
+
+	<select id="getContractsByFund_id" resultType="com.tongniu.loan.business.domain.Contract">
+		select * from
+		contract where contract_no in(
+		select
+		contract_no from tfundacct where
+		fund_id=#{0}) and states=1
+		limit #{1},#{2}
+	</select>
+
+	<select id="getContractsByFund_id_Count" resultType="int">
+		select
+		count(0) from contract where contract_no in(
+		select
+		contract_no from
+		tfundacct where fund_id=#{0}) and states=1
+
+	</select>
+
+	<update id="querenhuikuan">
+		update investment_account set
+		balance=balance+(select
+		contract_money from contract where
+		contract_no=#{0})
+		where
+		investment_account_no=(select investment_account_no from contract
+		where contract_no=#{0})
+	</update>
+
+	<update id="rateToaccountInsertFlow">
+		call 合同回款利息回账户插流水(#{0})
+	</update>
+
+	<select id="checkSameContract_no" resultType="int">
+		select count(0)
+		from `contract` where `contract_no`=#{0}
+	</select>
+
+</mapper>
