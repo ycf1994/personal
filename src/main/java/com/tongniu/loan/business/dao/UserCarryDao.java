@@ -9,6 +9,8 @@ public interface UserCarryDao {
 	
 	List<UserCarry> findUserCarryByUser_id(Integer user_id);
 	
+	List<UserCarry> findUserCarryBySaltUser_id(String token);
+	
 	List<UserCarry> findUserCarry_Rows(String searchValue,int status,int start,int rows);
 	
 	int findUserCarry_Total(String searchValue,int status);

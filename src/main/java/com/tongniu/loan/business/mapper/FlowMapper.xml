@@ -42,6 +42,11 @@
 		limit #{1},#{2} 
 	</select>
 	
+	<select id="getFlowListBySaltUser_id" resultMap="flowList">
+		select * from `flow` where salt_check(user_id,#{0})=1  order by input_time desc
+		
+	</select>
+	
 	<select id="getFlowListByUser_idCount" resultType="java.lang.Integer">
 		select count(0) from `flow` ord  where `user_id`=#{0} order by input_time  desc
 	</select>

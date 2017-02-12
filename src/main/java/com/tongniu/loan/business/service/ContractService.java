@@ -130,4 +130,9 @@ public class ContractService {
 	public String getTfundByContract_no(String contract_no){
 		return contractDao.getTfundByContract_no(contract_no);
 	}
+	
+	
+	public List<Contract> getNeewContractListBySaltUser_id(String token, Integer contractType){
+		return contractDao.getNeewContractListBySaltUser_id(token, contractType);
+	}
 }

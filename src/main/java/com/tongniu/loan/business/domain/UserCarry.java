@@ -11,7 +11,7 @@ public class UserCarry {
 	/**
 	 * 用户编号
 	 */
-	private Integer user_id;
+	private String user_id;
 	/**
 	 * 提现金额
 	 */
@@ -45,11 +45,11 @@ public class UserCarry {
 		this.id = id;
 	}
 
-	public Integer getUser_id() {
+	public String getUser_id() {
 		return user_id;
 	}
 
-	public void setUser_id(Integer user_id) {
+	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
 
@@ -101,7 +101,7 @@ public class UserCarry {
 		this.update_time = update_time;
 	}
 
-	public UserCarry(Integer id, Integer user_id, Double money, Integer bank_id, String bank_card, byte status,
+	public UserCarry(Integer id, String user_id, Double money, Integer bank_id, String bank_card, byte status,
 			String create_time, String update_time) {
 		super();
 		this.id = id;

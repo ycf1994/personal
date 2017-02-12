@@ -77,6 +77,8 @@ public interface UserDao {
 	 */
 	String getTixianBankinfo(Integer id);
 	
+	String getTixianBankinfoBySaltId(String token);
+	
 	
 	int setPwd(String newPwd,String phone);
 	
@@ -85,8 +87,16 @@ public interface UserDao {
 	
 	List<String> getQiRiNianhua(Integer id);
 	
-	int setPattern_lock(String pattern_lock,int id);
+	int setPattern_lock(String pattern_lock,String token);
 	
-	String getPattern_lock(int id);
+	String getPattern_lock(String token);
+	
+	User getUserBySaltId(String token);
+	
+	double getYestodayGainBySaltId(String token);
+	double getInvestMoneyBySaltId(String token);
+	double getLeijiBySaltId(String token);
+	List<String> getEveryDayGainBySaltId(String token);
+	List<String> getQiRiNianhuaBySaltId(String token);
 
 }

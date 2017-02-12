@@ -140,12 +140,41 @@ public class UserService {
 		return userDao.getQiRiNianhua(id);
 	}
 
-	public boolean setPattern_lock(String pattern_lock, int id) {
+	public boolean setPattern_lock(String pattern_lock, String id) {
 		return userDao.setPattern_lock(pattern_lock, id) > 0;
 	}
 
-	public String getPattern_lock(int id) {
+	public String getPattern_lock(String id) {
 		return userDao.getPattern_lock(id);
 	}
+	
+public User getUserBySaltId(String token){
+	return userDao.getUserBySaltId(token);
+}
+	
+	public double getYestodayGainBySaltId(String token){
+		return userDao.getYestodayGainBySaltId(token);
+	}
+	public double getInvestMoneyBySaltId(String token){
+		return userDao.getInvestMoneyBySaltId(token);
+	}
+	
+	public double getLeijiBySaltId(String token){
+		return userDao.getLeijiBySaltId(token);
+	}
+	
+	public List<String> getEveryDayGainBySaltId(String token){
+		return userDao.getEveryDayGainBySaltId(token);
+	}
+	
+	public List<String> getQiRiNianhuaBySaltId(String token){
+		return userDao.getQiRiNianhuaBySaltId(token);
+	}
+	
+	public String getTixianBankinfoBySaltId(String token){
+		return userDao.getTixianBankinfoBySaltId(token);
+	}
+	
+
 
 }

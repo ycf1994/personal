@@ -21,6 +21,10 @@ public class UserCarryService {
 	public List<UserCarry> findUserCarryByUser_id(Integer user_id) {
 		return dao.findUserCarryByUser_id(user_id);
 	}
+	
+	public List<UserCarry> findUserCarryBySaltUser_id(String token){
+		return dao.findUserCarryBySaltUser_id(token);
+	}
 
 	public List<UserCarry> findUserCarry_Rows(String searchValue,int status ,int page, int rows)
 

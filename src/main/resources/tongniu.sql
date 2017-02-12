@@ -14749,6 +14749,9 @@ INSERT INTO `usercarry` VALUES ('15', '2', '500.00', null, '4100620121577577', '
 INSERT INTO `usercarry` VALUES ('16', '1', '44.00', null, '4100620121577577', '0', '2017-02-04 14:14:25', null, null);
 INSERT INTO `usercarry` VALUES ('17', '2', '200.00', null, '4100620121577577', '0', '2017-02-06 10:29:12', null, null);
 
+DROP VIEW IF EXISTS `ytx`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `ytx` AS select `q`.`id` AS `id`,sum(`q`.`money`) AS `ytx` from (select substring_index(`v`.`detail`,'-',1) AS `id`,substring_index(`v`.`detail`,'-',-(1)) AS `money` from (select `a1`.`user_id` AS `user_id`,replace(substring_index(`a1`.`detail`,',',`tongniu`.`b`.`id`),concat(substring_index(`a1`.`detail`,',',(`tongniu`.`b`.`id` - 1)),','),'') AS `detail` from (`tongniu`.`b` join (select `x`.`user_id` AS `user_id`,concat(`x`.`detail`,',') AS `detail`,((length(`x`.`detail`) - length(replace(`x`.`detail`,',',''))) + 1) AS `size` from (select `tongniu`.`usercarry`.`id` AS `id`,`tongniu`.`usercarry`.`user_id` AS `user_id`,`tongniu`.`usercarry`.`money` AS `money`,`tongniu`.`usercarry`.`bank_id` AS `bank_id`,`tongniu`.`usercarry`.`bank_card` AS `bank_card`,`tongniu`.`usercarry`.`status` AS `status`,`tongniu`.`usercarry`.`create_time` AS `create_time`,`tongniu`.`usercarry`.`update_time` AS `update_time`,`tongniu`.`usercarry`.`detail` AS `detail` from `tongniu`.`usercarry` where (`tongniu`.`usercarry`.`status` = 1)) `x`) `a1` on((`tongniu`.`b`.`id` <= `a1`.`size`)))) `v`) `q` group by `q`.`id` ;
+
 -- ----------------------------
 -- View structure for dsh
 -- ----------------------------
@@ -14815,8 +14818,6 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- ----------------------------
 -- View structure for ytx
 -- ----------------------------
-DROP VIEW IF EXISTS `ytx`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `ytx` AS select `q`.`id` AS `id`,sum(`q`.`money`) AS `ytx` from (select substring_index(`v`.`detail`,'-',1) AS `id`,substring_index(`v`.`detail`,'-',-(1)) AS `money` from (select `a1`.`user_id` AS `user_id`,replace(substring_index(`a1`.`detail`,',',`tongniu`.`b`.`id`),concat(substring_index(`a1`.`detail`,',',(`tongniu`.`b`.`id` - 1)),','),'') AS `detail` from (`tongniu`.`b` join (select `x`.`user_id` AS `user_id`,concat(`x`.`detail`,',') AS `detail`,((length(`x`.`detail`) - length(replace(`x`.`detail`,',',''))) + 1) AS `size` from (select `tongniu`.`usercarry`.`id` AS `id`,`tongniu`.`usercarry`.`user_id` AS `user_id`,`tongniu`.`usercarry`.`money` AS `money`,`tongniu`.`usercarry`.`bank_id` AS `bank_id`,`tongniu`.`usercarry`.`bank_card` AS `bank_card`,`tongniu`.`usercarry`.`status` AS `status`,`tongniu`.`usercarry`.`create_time` AS `create_time`,`tongniu`.`usercarry`.`update_time` AS `update_time`,`tongniu`.`usercarry`.`detail` AS `detail` from `tongniu`.`usercarry` where (`tongniu`.`usercarry`.`status` = 1)) `x`) `a1` on((`tongniu`.`b`.`id` <= `a1`.`size`)))) `v`) `q` group by `q`.`id` ;
 
 -- ----------------------------
 -- Procedure structure for assign_1_每日活期利息

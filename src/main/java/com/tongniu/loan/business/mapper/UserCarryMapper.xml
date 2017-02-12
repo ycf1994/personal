@@ -6,11 +6,15 @@
 	<insert id="addUserCarry">
 		insert into
 		`usercarry`(`user_id`,`money`,`bank_id`,`bank_card`)
-		values(#{user_id},#{money},#{bank_id},#{bank_card})
+		values(get_userid_by_saltid(#{user_id}),#{money},#{bank_id},#{bank_card})
 	</insert>
 
 	<select id="findUserCarryByUser_id" resultType="com.tongniu.loan.business.domain.UserCarry">
 		select * from usercarry where user_id=#{0} order by id desc
+	</select>
+	
+	<select id="findUserCarryBySaltUser_id" resultType="com.tongniu.loan.business.domain.UserCarry">
+		select * from usercarry where salt_check(user_id,#{0}) order by id desc
 	</select>
 
 	<select id="findUserCarry_Rows" resultType="com.tongniu.loan.business.domain.UserCarry">

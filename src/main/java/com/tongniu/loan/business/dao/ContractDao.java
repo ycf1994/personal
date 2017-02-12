@@ -45,6 +45,7 @@ public interface ContractDao {
 	int searchContractCount(String investment_account_no);
 
 	List<Contract> getNeewContractListByUser_id(Integer user_id, Integer contractType);
+	List<Contract> getNeewContractListBySaltUser_id(String token, Integer contractType);
 
 	Contract getContractByContractId(Integer id);
 

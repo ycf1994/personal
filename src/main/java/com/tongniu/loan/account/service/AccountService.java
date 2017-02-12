@@ -18,4 +18,8 @@ public class AccountService {
 	public Account findAccountByUser_id(Integer user_id) {
 		return accountDao.findAccountByUser_id(user_id);
 	}
+	
+	public Account findAccountBySaltUser_id(String token){
+		return accountDao.findAccountBySaltUser_id(token);
+	}
 }

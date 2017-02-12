@@ -61,5 +61,9 @@ public class FlowService {
 	public List<String> getFlowTypes() {
 		return flowDao.getFlowTypes();
 	}
+	
+	public List<Flow> getFlowListBySaltUser_id(String token){
+		return flowDao.getFlowListBySaltUser_id(token);
+	}
 
 }

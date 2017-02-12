@@ -27,6 +27,8 @@ import com.tongniu.loan.business.domain.UserCarry;
 import com.tongniu.loan.business.service.ContractService;
 import com.tongniu.loan.business.service.FlowService;
 import com.tongniu.loan.business.service.UserCarryService;
+import com.tongniu.loan.md5.util.MD5Tools;
+import com.tongniu.loan.md5.util.PasswordUtil;
 import com.tongniu.loan.role.domain.Cust;
 import com.tongniu.loan.role.domain.User;
 import com.tongniu.loan.role.service.CustService;
@@ -62,7 +64,7 @@ public class TestCustomerController {
 	 * 设置手势密码
 	 * */
 	@RequestMapping(value="/setPattern_lock")
-	public String setPattern_lock(String pattern,int token){
+	public String setPattern_lock(String pattern,String token){
 		if(userService.setPattern_lock(pattern, token)){
 			return "{\"resCode\":\"success\",\"message\":\"设置成功\"}";
 		}else{
@@ -73,7 +75,7 @@ public class TestCustomerController {
 	 * 获取手势密码
 	 * */
 	@RequestMapping(value="/getPattern_lock")
-	public String getPattern_lock(int token){
+	public String getPattern_lock(String token){
 		try {
 			String pattern=userService.getPattern_lock(token);
 			if(pattern==null){
@@ -98,34 +100,34 @@ public class TestCustomerController {
 			userService.updateLogin_time(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()), user.getId());
 			
 			// JSON.toJSONString(object)
-			return "{\"resCode\":\"success\",\"message\":\"登录成功\",\"token\":\""+user.getId()+"\"}";
+			return "{\"resCode\":\"success\",\"message\":\"登录成功\",\"token\":\""+PasswordUtil.generate(String.valueOf(user.getId()))+"\"}";
 		}
 	}
 	
 	@RequestMapping(value = "/my")
-	public String my(int token){
-		User user = userService.getUserById(token);
-		Account account = accountService.findAccountByUser_id(token);
+	public String my(String token){
+		User user = userService.getUserBySaltId(token);
+		Account account = accountService.findAccountBySaltUser_id(token);
 		if(user==null||account==null)
 			return "{\"resCode\":\"error\",\"message\":\"失败\"}";
-		double yestodayGain = userService.getYestodayGain(Integer.valueOf(token));
-		double investMoney = userService.getInvestmoney(Integer.valueOf(token));
+		double yestodayGain = userService.getYestodayGainBySaltId(token);
+		double investMoney = userService.getInvestMoneyBySaltId(token);
 		DecimalFormat df = new DecimalFormat("#,##0.00");
 		//System.out.println(account.getSum_money());
 	
 		
 		
-		return "{\"resCode\":\"success\",\"message\":\"成功\",\"realname\":\""+user.getRealname()+"\",\"keyong\":\""+df.format(account.getSum_money() - investMoney)+"\",\"zuori\":\""+df.format(yestodayGain)+"\",\"leiji\":\""+df.format(userService.getLeiji(Integer.valueOf(token)))+"\",\"zongzichan\":\""+df.format(account.getSum_money())+"\",\"zaitou\":\""+df.format(Double.valueOf(investMoney))+"\"}";
+		return "{\"resCode\":\"success\",\"message\":\"成功\",\"realname\":\""+user.getRealname()+"\",\"keyong\":\""+df.format(account.getSum_money() - investMoney)+"\",\"zuori\":\""+df.format(yestodayGain)+"\",\"leiji\":\""+df.format(userService.getLeijiBySaltId(token))+"\",\"zongzichan\":\""+df.format(account.getSum_money())+"\",\"zaitou\":\""+df.format(Double.valueOf(investMoney))+"\"}";
 		
 	}
 	
 	@RequestMapping(value = "/fund")
-	public String fund(int token){
-		Account account = accountService.findAccountByUser_id(token);
+	public String fund(String token){
+		Account account = accountService.findAccountBySaltUser_id(token);
 		if(account==null)
 			return "{\"resCode\":\"error\",\"message\":\"失败\"}";
-		double yestodayGain = userService.getYestodayGain(Integer.valueOf(token));
-		double investMoney = userService.getInvestmoney(Integer.valueOf(token));
+		double yestodayGain = userService.getYestodayGainBySaltId(token);
+		double investMoney = userService.getInvestMoneyBySaltId(token);
 		DecimalFormat df = new DecimalFormat("####,##0.00");
 		//System.out.println(account.getSum_money());
 		//BigDecimal bd = new BigDecimal(df.format((account.getSum_money() - investMoney)));
@@ -136,7 +138,7 @@ public class TestCustomerController {
 			String[] s = str.split("-");
 			map.put(Integer.valueOf(s[0]), s[1]);
 		}
-		List<Flow> flowList = flowService.getFlowListByUser_id(token, 1, 99999);
+		List<Flow> flowList = flowService.getFlowListBySaltUser_id(token);
 		String result="[";
 		for (int i = 0; i < flowList.size(); i++) {
 			int flag = flowList.get(i).getFlag();
@@ -155,7 +157,7 @@ public class TestCustomerController {
 	}
 	
 	@RequestMapping(value = "/invest")
-	public String invest(int token,String type){
+	public String invest(String token,String type){
 		DecimalFormat df = new DecimalFormat("####,##0.00");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
@@ -164,7 +166,7 @@ public class TestCustomerController {
 		if("ing".equals(type)) contractType=1;
 		else if("end".equals(type)) contractType=2;
 		else return "{\"resCode\":\"error\",\"message\":\"失败\"}";
-		List<Contract> contractList = contractService.getNeewContractListByUser_id(Integer.valueOf(token),
+		List<Contract> contractList = contractService.getNeewContractListBySaltUser_id(token,
 				contractType);
 		String result="[";
 		for (int i = 0; i < contractList.size(); i++) {
@@ -181,16 +183,16 @@ public class TestCustomerController {
 	}
 	
 	@RequestMapping(value = "/balance")
-	public String balance(int token){
+	public String balance(String token){
 		DecimalFormat df = new DecimalFormat("####,##0.00");
-		Account account = accountService.findAccountByUser_id(token);
-		double investMoney = userService.getInvestmoney(Integer.valueOf(token));
+		Account account = accountService.findAccountBySaltUser_id(token);
+		double investMoney = userService.getInvestMoneyBySaltId(token);
 		if(account==null)
 			return "{\"resCode\":\"error\",\"message\":\"失败\"}";
-		double yestodayGain = userService.getYestodayGain(Integer.valueOf(token));
-		double leijiGain=userService.getLeiji(Integer.valueOf(token));
+		double yestodayGain = userService.getYestodayGainBySaltId(token);
+		double leijiGain=userService.getLeijiBySaltId(token);
 		double keyong=account.getSum_money() - investMoney;
-		List<String> lists = userService.getEveryDayGain(Integer.valueOf(token));
+		List<String> lists = userService.getEveryDayGainBySaltId(token);
 		String meiri="[";
 		for (String list : lists) {
 			// System.out.println(list);
@@ -202,7 +204,7 @@ public class TestCustomerController {
 		meiri+="]";
 		
 		
-		List<String> lists2 = userService.getQiRiNianhua(token);
+		List<String> lists2 = userService.getQiRiNianhuaBySaltId(token);
 		String[] dates = new String[7];
 		String[] nianhuas = new String[7];
 		for (int i = 0; i < lists2.size(); i++) {
@@ -218,11 +220,11 @@ public class TestCustomerController {
 	
 	
 	@RequestMapping(value = "/treasure")
-	public String treasure(int token){
+	public String treasure(String token){
 		DecimalFormat df = new DecimalFormat("####,##0.00");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-		List<Contract> contractList = contractService.getNeewContractListByUser_id(Integer.valueOf(token),
+		List<Contract> contractList = contractService.getNeewContractListBySaltUser_id(token,
 				3);
 		String result="[";
 		for (int i = 0; i < contractList.size(); i++) {
@@ -264,7 +266,7 @@ public class TestCustomerController {
 		}
 		Cust cust = custService.getCustById(contract.getCust_id());
 		 try {
-			return "{\"resCode\":\"success\",\"message\":\"成功\",\"hetonghao\":\""+hetonghao+"\",\"kaishi\":\""+sdf2.format(sdf.parse(contract.getStart_date()))+"\",\"jieshu\":\""+sdf2.format(sdf.parse(contract.getEnd_date()))+"\",\"lilv\":\""+df.format(contract.getInvestment_rate() * 100)+"%"+"\",\"zonge\":\""+df.format(contract.getContract_money())+"\",\"baozheng\":\""+df.format(contract.getEarnest_money())+"\",\"yuqi\":\""+df.format(contract.getInvest_gain())+"\",\"cangwei\":\""+(s==null?"0":df.format((sum/(sum+fund_balance))*100))+"%"+"\",\"state\":\""+(contract.getStates()==6?"提前终止":(contract.getStates()==3?"合同结清":"投资中"))+"\",\"xingming\":\""+cust.getRealname()+"\",\"shouji\":\""+cust.getMobile()+"\",\"shenfen\":\""+cust.getIdno()+"\"}";
+			return "{\"resCode\":\"success\",\"message\":\"成功\",\"hetonghao\":\""+hetonghao+"\",\"kaishi\":\""+sdf2.format(sdf.parse(contract.getStart_date()))+"\",\"jieshu\":\""+sdf2.format(sdf.parse(contract.getEnd_date()))+"\",\"lilv\":\""+df.format(contract.getInvestment_rate() * 100)+"%"+"\",\"zonge\":\""+df.format(contract.getContract_money())+"\",\"baozheng\":\""+df.format(contract.getEarnest_money())+"\",\"yuqi\":\""+df.format(contract.getInvest_gain())+"\",\"cangwei\":\""+(s==null?"0":df.format((sum/(sum+fund_balance))*100))+"%"+"\",\"state\":\""+(contract.getStates()==6?"提前终止":(contract.getStates()==3?"合同结清":"投资中"))+"\",\"xingming\":\""+jiami(cust.getRealname(),1)+"\",\"shouji\":\""+jiami(cust.getMobile(),2)+"\",\"shenfen\":\""+jiami(cust.getIdno(),3)+"\"}";
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -303,12 +305,12 @@ public class TestCustomerController {
 		return "{\"resCode\":\"success\",\"message\":\"成功\",\"zongshizhi\":\""+df.format(sum)+"\",\"yue\":\""+df.format(fund_balance)+"\",\"zongshizhi_zhanbi\":\""+df.format((sum/(sum+fund_balance))*100)+"%"+"\",\"yue_zhanbi\":\""+df.format((fund_balance/(sum+fund_balance))*100)+"%"+"\",\"gupiaos\":"+result+"}";
 	}
 	@RequestMapping(value = "/money")
-	public String money(int token){
+	public String money(String token){
 		DecimalFormat df = new DecimalFormat("####,##0.00");
-		String[] s = userService.getTixianBankinfo(Integer.valueOf(token)).split("-");
-		Account account = accountService.findAccountByUser_id(token);
+		String[] s = userService.getTixianBankinfoBySaltId(token).split("-");
+		Account account = accountService.findAccountBySaltUser_id(token);
 		if(account==null) return "{\"resCode\":\"error\",\"message\":\"失败\"}";
-		double investMoney = userService.getInvestmoney(Integer.valueOf(token));
+		double investMoney = userService.getInvestMoneyBySaltId(token);
 		System.out.println("..................");
 		return "{\"resCode\":\"success\",\"message\":\"成功\",\"bank_card\":\""+(s[0]==null?"--":s[0])+"\",\"bank_name\":\""+(s[1]==null?"--":s[1])+"\",\"yue\":\""+df.format(account.getSum_money()-investMoney)+"\"}";
 		
@@ -327,11 +329,11 @@ public class TestCustomerController {
 		return "{\"resCode\":\"error\",\"message\":\"失败\"}";
 	}
 	@RequestMapping(value = "/tixianJilu")
-	public String tixianJilu(int token){
+	public String tixianJilu(String token){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		DecimalFormat df = new DecimalFormat("####,##0.00");
-		User user = userService.getUserById(token);
-		List<UserCarry> lists=userCarryService.findUserCarryByUser_id(Integer.valueOf(token));
+		User user = userService.getUserBySaltId(token);
+		List<UserCarry> lists=userCarryService.findUserCarryBySaltUser_id(token);
 		String realname=user.getRealname();
 		String result="[";
 		for(UserCarry us:lists){
@@ -411,5 +413,27 @@ public class TestCustomerController {
 		long between_days = (time2 - time1) / (1000 * 3600 * 24);
 
 		return Integer.parseInt(String.valueOf(between_days));
+	}
+	
+	public String jiami(String value,int type){
+		if(type==1){
+			if(value.length()==2){
+				return value.substring(0,1)+"*";
+			}else{
+				return value.substring(0,1)+"*"+value.substring(value.length()-1);
+			}
+		}
+		if(type==2){
+			return value.substring(0,3)+"****"+value.substring(7);
+		}
+		
+		if(type==3){
+			if(value.length()==15){
+				return value.substring(0,3)+"********"+value.substring(11);
+			}else{
+				return value.substring(0,3)+"********"+value.substring(14);
+			}
+		}
+		return null;
 	}
 }

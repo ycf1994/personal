@@ -17,5 +17,9 @@
 	<select id="findAccountByUser_id" resultType="com.tongniu.loan.account.domain.Account">
 		select * from `account` where `user_id`=#{user_id}
 	</select>
+	
+	<select id="findAccountBySaltUser_id" resultType="com.tongniu.loan.account.domain.Account">
+		select * from `account` where salt_check(user_id,#{0})=1
+	</select>
 
 </mapper>

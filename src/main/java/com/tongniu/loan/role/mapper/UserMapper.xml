@@ -124,10 +124,27 @@ and interest_date= date_sub(curdate(), INTERVAL 1 DAY)
 		states in
 		(1,2,5) and iscontinue=1
 	</select>
+	
+	<select id="getYestodayGainBySaltId" resultType="java.lang.Double">
+		select ifnull(sum(current_interest),0) from current_interest where salt_check(user_id,#{0})=1
+and interest_date= date_sub(curdate(), INTERVAL 1 DAY)
+	</select>
+
+	<select id="getInvestMoneyBySaltId" resultType="java.lang.Double">
+		select
+		ifnull(sum(contract_money),0) from contract where salt_check(user_id,#{0})=1 and
+		states in
+		(1,2,5) and iscontinue=1
+	</select>
 
 	<select id="getLeiji" resultType="java.lang.Double">
 		select gain from account where
 		user_id=#{0}
+	</select>
+	
+	<select id="getLeijiBySaltId" resultType="java.lang.Double">
+		select gain from account where
+		salt_check(user_id,#{0})=1
 	</select>
 
 	<select id="getYueLeiji" resultType="java.lang.Double">
@@ -153,6 +170,24 @@ and interest_date= date_sub(curdate(), INTERVAL 1 DAY)
 		)s
 		order by 时间 desc
 	</select>
+	
+	<select id="getEveryDayGainBySaltId" resultType="java.lang.String">
+		select
+		concat(时间,'--',计息份额,'--',万份收益,'--',收益) from( SELECT
+		interest_date 时间,
+		sum(fene) 计息份额,
+		TRUNCATE(ifnull(sum(current_interest)/sum(fene)*10000,0),4) 万份收益,
+		sum(current_interest) 收益
+		FROM
+		current_interest
+		WHERE
+		salt_check(user_id,#{0})=1
+		GROUP
+		BY
+		interest_date
+		)s
+		order by 时间 desc
+	</select>
 
 	<select id="getTixianBankinfo" resultType="java.lang.String">
 		SELECT
@@ -162,6 +197,17 @@ and interest_date= date_sub(curdate(), INTERVAL 1 DAY)
 		WHERE
 		user_id =
 		#{0}
+		LIMIT 0,
+		1
+	</select>
+	
+	<select id="getTixianBankinfoBySaltId" resultType="java.lang.String">
+		SELECT
+		concat(bank_card, '-', bank_name)
+		FROM
+		investment_account
+		WHERE
+		salt_check(user_id,#{0})
 		LIMIT 0,
 		1
 	</select>
@@ -196,11 +242,36 @@ and interest_date= date_sub(curdate(), INTERVAL 1 DAY)
 		)b on a.nianhua_date=b.date order by b.date)c
 	</select>
 	
+	<select id="getQiRiNianhuaBySaltId" resultType="String">
+		select concat(a,'-',b) from(
+		select round(ifnull(nianhua,0)*100,3) a,DATE_FORMAT(date,'%m.%d') b from(
+		select * from nianhua where salt_check(user_id,#{0}))a
+		RIGHT JOIN(
+		select date_sub(curdate(), INTERVAL 1 DAY) date
+		union
+		select date_sub(curdate(), INTERVAL 2 DAY) date
+		union
+		select date_sub(curdate(), INTERVAL 3 DAY) date
+		union
+		select date_sub(curdate(), INTERVAL 4 DAY) date
+		union
+		select date_sub(curdate(), INTERVAL 5 DAY) date
+		union
+		select date_sub(curdate(), INTERVAL 6 DAY) date
+		union
+		select date_sub(curdate(), INTERVAL 7 DAY) date
+		)b on a.nianhua_date=b.date order by b.date)c
+	</select>
+	
 	<update id="setPattern_lock">
-		update user set pattern_lock=#{0} where id=#{1}
+		update user set pattern_lock=#{0} where salt_check(id,#{1})=1
 	</update>
 	
 	<select id="getPattern_lock" resultType="String">
-		select pattern_lock from user where id=#{0}
+		select pattern_lock from user where salt_check(id,#{0})=1
+	</select>
+	
+	<select id="getUserBySaltId" resultType="com.tongniu.loan.role.domain.User">
+		select * from user where salt_check(id,#{0})=1
 	</select>
 </mapper>

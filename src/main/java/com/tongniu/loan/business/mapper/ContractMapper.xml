@@ -99,6 +99,22 @@
 			and `states`!=0 and `states`!=4
 		</if>
 	</select>
+	
+	<select id="getNeewContractListBySaltUser_id" resultMap="contractList">
+		select * from `contract`
+		where salt_check(user_id,#{0})=1
+
+		<if test="param2==1">
+			and `iscontinue`=1
+			and `states` in (1,2,5)
+		</if>
+		<if test="param2==2">
+			and `states` in(3,6)
+		</if>
+		<if test="param2==3">
+			and `states`!=0 and `states`!=4
+		</if>
+	</select>
 
 	<select id="getContractByContractId" resultType="com.tongniu.loan.business.domain.Contract">
 		select * from

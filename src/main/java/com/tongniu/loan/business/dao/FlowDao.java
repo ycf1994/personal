@@ -27,6 +27,8 @@ public interface FlowDao {
 	List<Flow> findRecordFlowsByUser_id(Integer user_id);
 
 	List<Flow> getFlowListByUser_id(Integer user_id, int start, int rows);
+	
+	List<Flow> getFlowListBySaltUser_id(String token);
 
 	int getFlowListByUser_idCount(Integer user_id);
 
