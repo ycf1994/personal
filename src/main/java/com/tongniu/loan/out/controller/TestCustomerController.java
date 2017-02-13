@@ -335,10 +335,11 @@ public class TestCustomerController {
 		User user = userService.getUserBySaltId(token);
 		List<UserCarry> lists=userCarryService.findUserCarryBySaltUser_id(token);
 		String realname=user.getRealname();
+		String idno=user.getIdno();
 		String result="[";
 		for(UserCarry us:lists){
 			try {
-				result+="{\"jine\":\""+df.format(us.getMoney())+"\",\"daozhang\":\""+(us.getUpdate_time()==null?"--":sdf.format(sdf.parse(us.getUpdate_time())))+"\",\"yinhang\":\""+us.getBank_card()+"\",\"zhanghu\":\""+realname+"\",\"zhuangtai\":\""+(us.getStatus()==0?"未处理":(us.getStatus()==1?"提现成功":"提现失败"))+"\"},";
+				result+="{\"jine\":\""+df.format(us.getMoney())+"\",\"daozhang\":\""+(us.getUpdate_time()==null?"--":sdf.format(sdf.parse(us.getUpdate_time())))+"\",\"yinhang\":\""+us.getBank_card()+"\",\"zhanghu\":\""+jiami(idno,3)+"/"+jiami(realname,1)+"\",\"zhuangtai\":\""+(us.getStatus()==0?"未处理":(us.getStatus()==1?"提现成功":"提现失败"))+"\"},";
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

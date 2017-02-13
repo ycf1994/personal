@@ -33,6 +33,10 @@ $(function(){
 	})
 	
 	
+	var type=(getCookie("type"));
+	if(type==1){
+		$("a").attr("href","invest.html");
+	}
 	
 	
 	$.get("../app/vip/customer/fanganhao",{hetonghao:getCookie("hetonghao")},function(result){
